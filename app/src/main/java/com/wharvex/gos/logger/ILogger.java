@@ -1,4 +1,4 @@
-package com.wharvex.gos.logging;
+package com.wharvex.gos.logger;
 
 public interface ILogger {
   void log(String message);

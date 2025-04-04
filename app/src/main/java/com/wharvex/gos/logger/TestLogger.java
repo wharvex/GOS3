@@ -1,7 +1,7 @@
-package com.wharvex.gos.logging;
+package com.wharvex.gos.logger;
 
 import com.google.inject.Inject;
-import com.wharvex.gos.windowing.AbstractWindow;
+import com.wharvex.gos.window.AbstractWindow;
 
 import javax.swing.*;
 

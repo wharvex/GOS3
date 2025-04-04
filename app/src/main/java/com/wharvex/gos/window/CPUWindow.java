@@ -1,4 +1,4 @@
-package com.wharvex.gos.windowing;
+package com.wharvex.gos.window;
 
 import com.google.inject.Singleton;
 
