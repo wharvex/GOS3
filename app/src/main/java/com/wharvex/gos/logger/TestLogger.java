@@ -16,8 +16,6 @@ public class TestLogger implements ILogger {
   @Override
   public void log(String message) {
     System.out.println("TestLogger: " + message);
-    SwingUtilities.invokeLater(() -> {
-      window.writeToConsole("yo");
-    });
+    window.writeToConsole("yo");
   }
 }

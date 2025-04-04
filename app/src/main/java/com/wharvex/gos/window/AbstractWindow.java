@@ -39,7 +39,9 @@ public abstract class AbstractWindow extends JFrame {
   }
 
   public void writeToConsole(String message) {
-    console.append(message + "\n");
-    console.setCaretPosition(console.getDocument().getLength());
+    SwingUtilities.invokeLater(() -> {
+      console.append(message + "\n");
+      console.setCaretPosition(console.getDocument().getLength());
+    });
   }
 }

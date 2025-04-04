@@ -26,6 +26,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.inject/guice
     implementation group: 'com.google.inject', name: 'guice', version: '7.0.0'
+
+    // https://mvnrepository.com/artifact/com.google.inject.extensions/guice-assistedinject
+    implementation group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '7.0.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
