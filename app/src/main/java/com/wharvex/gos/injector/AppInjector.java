@@ -9,15 +9,15 @@ import com.wharvex.gos.process.KernelProcess;
 import com.wharvex.gos.semaphore.AbstractSemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 import com.wharvex.gos.semaphore.OwnedBinarySemaphore;
-import com.wharvex.gos.window.AbstractWindow;
 import com.wharvex.gos.window.CPUWindow;
+import com.wharvex.gos.window.IWindow;
 
 public class AppInjector extends AbstractModule {
 
   @Override
   protected void configure() {
     bind(ILogger.class).to(TestLogger.class);
-    bind(AbstractWindow.class).to(CPUWindow.class);
+    bind(IWindow.class).to(CPUWindow.class);
     bind(AbstractKernelProcess.class).to(KernelProcess.class);
     install(new FactoryModuleBuilder().implement(AbstractSemaphore.class,
         OwnedBinarySemaphore.class).build(ISemaphoreFactory.class));

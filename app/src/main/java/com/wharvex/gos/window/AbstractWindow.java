@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public abstract class AbstractWindow extends JFrame {
+public abstract class AbstractWindow extends JFrame implements IWindow {
   private JTextArea console;
   protected List<JButton> buttons;
 
@@ -38,6 +38,7 @@ public abstract class AbstractWindow extends JFrame {
     add(scrollPane, BorderLayout.CENTER);
   }
 
+  @Override
   public void writeToConsole(String message) {
     SwingUtilities.invokeLater(() -> {
       console.append(message + "\n");

@@ -40,4 +40,9 @@ public class CPUWindow extends AbstractWindow {
   protected void callSetTitle() {
     setTitle("CPU Window");
   }
+
+  @Override
+  public void makeVisible() {
+    setVisible(true);
+  }
 }
