@@ -6,7 +6,7 @@ import com.wharvex.gos.logger.ILogger;
 import com.wharvex.gos.logger.TestLogger;
 import com.wharvex.gos.process.AbstractKernelProcess;
 import com.wharvex.gos.process.KernelProcess;
-import com.wharvex.gos.semaphore.AbstractSemaphore;
+import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 import com.wharvex.gos.semaphore.OwnedBinarySemaphore;
 import com.wharvex.gos.window.CPUWindow;
@@ -19,7 +19,7 @@ public class AppInjector extends AbstractModule {
     bind(ILogger.class).to(TestLogger.class);
     bind(IWindow.class).to(CPUWindow.class);
     bind(AbstractKernelProcess.class).to(KernelProcess.class);
-    install(new FactoryModuleBuilder().implement(AbstractSemaphore.class,
+    install(new FactoryModuleBuilder().implement(ISemaphore.class,
         OwnedBinarySemaphore.class).build(ISemaphoreFactory.class));
 //    install(
 //        new FactoryModuleBuilder().implement(AbstractActionListener.class,

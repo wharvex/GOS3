@@ -2,7 +2,7 @@ package com.wharvex.gos.process;
 
 import com.google.inject.Inject;
 import com.wharvex.gos.logger.ILogger;
-import com.wharvex.gos.semaphore.AbstractSemaphore;
+import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 
 import java.util.UUID;
@@ -10,7 +10,7 @@ import java.util.UUID;
 public abstract class AbstractProcess implements IProcess {
   private Thread thread;
   private String threadName;
-  private AbstractSemaphore semaphore;
+  private ISemaphore semaphore;
   @Inject
   private ISemaphoreFactory semaphoreFactory;
   private boolean stopRequested;
@@ -32,16 +32,12 @@ public abstract class AbstractProcess implements IProcess {
 
   @Override
   public void stop() {
-    try {
-      semaphore.acquire();
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    semaphore.callAcquire();
   }
 
   @Override
   public void start() {
-    semaphore.release();
+    semaphore.callRelease();
   }
 
   @Override
