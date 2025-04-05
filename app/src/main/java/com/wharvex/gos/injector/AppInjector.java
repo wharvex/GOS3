@@ -2,9 +2,6 @@ package com.wharvex.gos.injector;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.wharvex.gos.actionlistener.AbstractActionListener;
-import com.wharvex.gos.actionlistener.IActionListenerFactory;
-import com.wharvex.gos.actionlistener.ProcessButtonActionListener;
 import com.wharvex.gos.logger.ILogger;
 import com.wharvex.gos.logger.TestLogger;
 import com.wharvex.gos.process.AbstractKernelProcess;
