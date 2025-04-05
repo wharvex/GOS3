@@ -13,10 +13,8 @@ public class App {
   }
 
   public static void main(String[] args) {
-    System.out.println(new App().getGreeting());
-
     var injector = Guice.createInjector(new AppInjector());
     var client = injector.getInstance(Client.class);
-    client.printMessage();
+    client.startApp();
   }
 }

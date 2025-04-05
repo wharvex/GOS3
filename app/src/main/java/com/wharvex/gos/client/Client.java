@@ -7,23 +7,14 @@ import com.wharvex.gos.window.AbstractWindow;
 import javax.swing.*;
 
 public class Client {
+  @Inject
   private ILogger logger;
+  @Inject
   private AbstractWindow window;
 
-  @Inject
-  public void setLogger(ILogger logger) {
-    this.logger = logger;
-  }
-
-  @Inject
-  public void setWindow(AbstractWindow window) {
-    this.window = window;
-  }
-
-  public void printMessage() {
+  public void startApp() {
     SwingUtilities.invokeLater(() -> {
       window.setVisible(true);
     });
-    logger.log("hey");
   }
 }

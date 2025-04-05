@@ -1,6 +1,7 @@
 package com.wharvex.gos.process;
 
 import com.google.inject.Inject;
+import com.wharvex.gos.logger.ILogger;
 import com.wharvex.gos.semaphore.AbstractSemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 
@@ -10,7 +11,11 @@ public abstract class AbstractProcess implements IProcess {
   private Thread thread;
   private String threadName;
   private AbstractSemaphore semaphore;
+  @Inject
   private ISemaphoreFactory semaphoreFactory;
+  private boolean stopRequested;
+  @Inject
+  protected ILogger logger;
 
   @Override
   public void setThread() {
@@ -37,5 +42,10 @@ public abstract class AbstractProcess implements IProcess {
   @Override
   public void start() {
     semaphore.release();
+  }
+
+  @Override
+  public void requestStop() {
+    stopRequested = true;
   }
 }
