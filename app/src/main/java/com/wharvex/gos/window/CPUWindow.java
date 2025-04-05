@@ -2,17 +2,17 @@ package com.wharvex.gos.window;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.wharvex.gos.process.AbstractKernelProcess;
+import com.wharvex.gos.process.IKernelProcess;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 @Singleton
 public class CPUWindow extends AbstractWindow {
-  private AbstractKernelProcess kernelProcess;
+  private IKernelProcess kernelProcess;
 
   @Inject
-  public CPUWindow(AbstractKernelProcess kernelProcess) {
+  public CPUWindow(IKernelProcess kernelProcess) {
     kernelProcess.setThread();
     this.kernelProcess = kernelProcess;
   }
