@@ -13,6 +13,11 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
   private String threadName;
   private GOSProcess process;
 
+  /**
+   * We won't be subclassing GOSProcess, so accept unique process logic here.
+   *
+   * @param runLogic
+   */
   public AbstractProcessWrapper(Supplier<Integer> runLogic) {
     threadName = getClass().getSimpleName() + "_" +
         UUID.randomUUID().toString().substring(0, 8);
@@ -49,6 +54,16 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
 
     public void stop() {
       semaphore.callAcquire();
+    }
+
+    public void requestStop() {
+      stopRequested = true;
+    }
+
+    public void cooperate() {
+      if (stopRequested) {
+        stop();
+      }
     }
 
     public void start() {
