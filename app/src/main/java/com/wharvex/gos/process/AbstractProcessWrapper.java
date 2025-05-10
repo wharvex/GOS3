@@ -26,6 +26,21 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     process.setRunLogic(runLogic);
   }
 
+  @Override
+  public void init() {
+    process.init();
+  }
+
+  @Override
+  public void start() {
+    process.start();
+  }
+
+  @Override
+  public void stop() {
+    process.stop();
+  }
+
   private class GOSProcess implements Runnable {
     private Supplier<Integer> runLogic;
     private Thread thread;

@@ -1,15 +1,15 @@
 package com.wharvex.gos.logger;
 
 import com.google.inject.Inject;
-import com.wharvex.gos.window.IWindow;
+import com.wharvex.gos.window.ICPUWindow;
 
 public class TestLogger implements ILogger {
   @Inject
-  private IWindow window;
+  private ICPUWindow cpuWindow;
 
   @Override
-  public void log(String message) {
+  public void logCPU(String message) {
     System.out.println("TestLogger: " + message);
-    window.writeToConsole("yo");
+    cpuWindow.writeToConsole("yo");
   }
 }

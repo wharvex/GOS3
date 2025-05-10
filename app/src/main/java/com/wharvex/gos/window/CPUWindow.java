@@ -2,20 +2,15 @@ package com.wharvex.gos.window;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.wharvex.gos.process.IKernelProcess;
+import com.wharvex.gos.os.IOS;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 @Singleton
-public class CPUWindow extends AbstractWindow {
-  private IKernelProcess kernelProcess;
-
+public class CPUWindow extends AbstractWindow implements ICPUWindow {
   @Inject
-  public CPUWindow(IKernelProcess kernelProcess) {
-    kernelProcess.setThread();
-    this.kernelProcess = kernelProcess;
-  }
+  private IOS os;
 
   @Override
   protected void setButtons() {
@@ -24,7 +19,7 @@ public class CPUWindow extends AbstractWindow {
     var stopButton = new JButton("Stop OS");
 
     // Add action listeners to the buttons
-    startButton.addActionListener(e -> kernelProcess.init());
+    startButton.addActionListener(e -> os.startup());
     stopButton.addActionListener(e -> {
       writeToConsole("Stop button clicked");
       // Add logic to stop the CPU

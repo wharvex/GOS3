@@ -1,7 +1,9 @@
 package com.wharvex.gos.os;
 
-import com.wharvex.gos.process.IProcess;
+import com.wharvex.gos.process.IProcessWrapper;
 
 public interface IOS {
-  void createProcess(IProcess process);
+  void createProcess(IProcessWrapper process);
+
+  void startup();
 }
