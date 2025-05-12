@@ -7,8 +7,12 @@ import com.wharvex.gos.process.IProcessWrapper;
 
 @Singleton
 public class OS implements IOS {
+  private final IKernelProcessWrapper kernelProcessWrapper;
+
   @Inject
-  private IKernelProcessWrapper kernelProcessWrapper;
+  public OS(IKernelProcessWrapper kernelProcessWrapper) {
+    this.kernelProcessWrapper = kernelProcessWrapper;
+  }
 
   @Override
   public void createProcess(IProcessWrapper process) {

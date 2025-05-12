@@ -6,8 +6,12 @@ import com.wharvex.gos.window.ICPUWindow;
 import javax.swing.*;
 
 public class Client {
+  private final ICPUWindow cpuWindow;
+
   @Inject
-  private ICPUWindow cpuWindow;
+  public Client(ICPUWindow cpuWindow) {
+    this.cpuWindow = cpuWindow;
+  }
 
   public void startApp() {
     SwingUtilities.invokeLater(() -> {

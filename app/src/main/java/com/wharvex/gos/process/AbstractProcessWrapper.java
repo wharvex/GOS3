@@ -6,24 +6,22 @@ import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 
 import java.util.UUID;
-import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
 public abstract class AbstractProcessWrapper implements IProcessWrapper {
-  private String threadName;
-  private GOSProcess process;
+  private final GOSProcess process;
 
   /**
    * We won't be subclassing GOSProcess, so accept unique process logic here.
    *
    * @param runLogic
    */
-  public AbstractProcessWrapper(Supplier<Integer> runLogic) {
-    threadName = getClass().getSimpleName() + "_" +
+  public AbstractProcessWrapper(Supplier<Integer> runLogic,
+                                ISemaphoreFactory semaphoreFactory) {
+    var threadName = getClass().getSimpleName() + "_" +
         UUID.randomUUID().toString().substring(0, 8);
-    process = new GOSProcess();
+    process = new GOSProcess(runLogic, semaphoreFactory, threadName);
     process.setThread(new Thread(process, threadName));
-    process.setRunLogic(runLogic);
   }
 
   @Override
@@ -41,34 +39,35 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     process.stop();
   }
 
-  private class GOSProcess implements Runnable {
-    private Supplier<Integer> runLogic;
+  private final class GOSProcess implements Runnable {
+    private final Supplier<Integer> runLogic;
     private Thread thread;
-    private ISemaphore semaphore;
-    @Inject
-    private ISemaphoreFactory semaphoreFactory;
     private boolean stopRequested;
-    @Inject
-    protected ILogger logger;
+    private final ISemaphore semaphore;
 
-    public void GOSProcess() {
-      semaphore = semaphoreFactory.createSemaphore(threadName);
+    public GOSProcess(Supplier<Integer> runLogic,
+                      ISemaphoreFactory semaphoreFactory,
+                      String threadName) {
+      this.runLogic = runLogic;
+      this.semaphore = semaphoreFactory.createSemaphore(threadName);
     }
 
     public void setThread(Thread thread) {
       this.thread = thread;
     }
 
-    public void setRunLogic(Supplier<Integer> runLogic) {
-      this.runLogic = runLogic;
-    }
-
     public void init() {
       thread.start();
     }
 
+    public void start() {
+      thread.start();
+    }
+
     public void stop() {
-      semaphore.callAcquire();
+      if (thread != null && thread.isAlive()) {
+        thread.interrupt();
+      }
     }
 
     public void requestStop() {
@@ -79,10 +78,6 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
       if (stopRequested) {
         stop();
       }
-    }
-
-    public void start() {
-      semaphore.callRelease();
     }
 
     @Override

@@ -11,7 +11,6 @@ import com.wharvex.gos.process.KernelProcessWrapper;
 import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 import com.wharvex.gos.semaphore.OwnedBinarySemaphore;
-import com.wharvex.gos.window.AbstractWindow;
 import com.wharvex.gos.window.CPUWindow;
 import com.wharvex.gos.window.ICPUWindow;
 
@@ -25,12 +24,5 @@ public class AppInjector extends AbstractModule {
     bind(IOS.class).to(OS.class);
     install(new FactoryModuleBuilder().implement(ISemaphore.class,
         OwnedBinarySemaphore.class).build(ISemaphoreFactory.class));
-//    install(
-//        new FactoryModuleBuilder().implement(AbstractActionListener.class,
-//                ProcessButtonActionListener.class)
-//            .build(IActionListenerFactory.class));
-
-    // Uncomment to switch to MessageServiceB
-    // bind(IMessageService.class).to(MessageServiceB.class);
   }
 }
