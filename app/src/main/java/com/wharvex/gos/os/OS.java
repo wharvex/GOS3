@@ -16,11 +16,7 @@ public class OS implements IOS {
 
   @Override
   public void createProcess(IProcessWrapper process) {
-    // Implementation for creating a process
-    // This is a placeholder for the actual process creation logic
-    // Replace with the actual implementation
     process.init();
-    process.start();
   }
 
   @Override

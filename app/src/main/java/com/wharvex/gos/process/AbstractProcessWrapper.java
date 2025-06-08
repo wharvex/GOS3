@@ -1,7 +1,5 @@
 package com.wharvex.gos.process;
 
-import com.google.inject.Inject;
-import com.wharvex.gos.logger.ILogger;
 import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 
@@ -61,7 +59,7 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     }
 
     public void start() {
-      thread.start();
+      semaphore.callRelease();
     }
 
     public void stop() {
