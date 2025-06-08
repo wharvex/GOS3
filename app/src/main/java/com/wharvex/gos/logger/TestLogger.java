@@ -18,7 +18,7 @@ public class TestLogger implements ILogger {
 
   @Override
   public void logCPU(String message) {
-    System.out.println("TestLogger: " + message);
-    cpuWindow.writeToConsole("yo");
+    log(message);
+    cpuWindow.writeToConsole(message);
   }
 }

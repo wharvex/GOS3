@@ -9,6 +9,7 @@ public class KernelProcessWrapper extends AbstractProcessWrapper
   @Inject
   public KernelProcessWrapper(ISemaphoreFactory semaphoreFactory,
                               ILogger logger) {
+    // Maybe pass the logger in here as well?
     super(() -> {
       logger.logCPU("Kernel process running");
       return 0;
