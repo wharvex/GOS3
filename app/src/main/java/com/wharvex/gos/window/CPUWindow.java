@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 @Singleton
 public class CPUWindow extends AbstractWindow implements ICPUWindow {
+  // TODO: Can we convert this to constructor injection?
   @Inject
   private IOS os;
 

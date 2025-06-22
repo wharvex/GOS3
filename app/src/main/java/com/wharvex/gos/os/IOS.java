@@ -6,4 +6,6 @@ public interface IOS {
   void createProcess(IProcessWrapper process);
 
   void startup();
+
+  void shutdown();
 }

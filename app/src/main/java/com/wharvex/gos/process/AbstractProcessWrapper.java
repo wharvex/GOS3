@@ -1,5 +1,6 @@
 package com.wharvex.gos.process;
 
+import com.wharvex.gos.logger.ILogger;
 import com.wharvex.gos.semaphore.ISemaphore;
 import com.wharvex.gos.semaphore.ISemaphoreFactory;
 
@@ -15,10 +16,12 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
    * @param runLogic
    */
   public AbstractProcessWrapper(Supplier<Integer> runLogic,
-                                ISemaphoreFactory semaphoreFactory) {
+                                ISemaphoreFactory semaphoreFactory,
+                                ILogger logger
+  ) {
     var threadName = getClass().getSimpleName() + "_" +
         UUID.randomUUID().toString().substring(0, 8);
-    process = new GOSProcess(runLogic, semaphoreFactory, threadName);
+    process = new GOSProcess(runLogic, semaphoreFactory, threadName, logger);
     process.setThread(new Thread(process, threadName));
   }
 
@@ -37,17 +40,19 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     process.stop();
   }
 
-  private final class GOSProcess implements Runnable {
+  private static final class GOSProcess implements Runnable {
     private final Supplier<Integer> runLogic;
     private Thread thread;
     private boolean stopRequested;
     private final ISemaphore semaphore;
+    private final ILogger logger;
 
     public GOSProcess(Supplier<Integer> runLogic,
                       ISemaphoreFactory semaphoreFactory,
-                      String threadName) {
+                      String threadName, ILogger logger) {
       this.runLogic = runLogic;
-      this.semaphore = semaphoreFactory.createSemaphore(threadName);
+      this.semaphore = semaphoreFactory.createSemaphore(threadName, logger);
+      this.logger = logger;
     }
 
     public void setThread(Thread thread) {
@@ -55,6 +60,10 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     }
 
     public void init() {
+      logger.logCPU(
+          "About to directly start thread " + thread.getName() +
+              " from thread: " +
+              Thread.currentThread().getName());
       thread.start();
     }
 
@@ -63,9 +72,7 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     }
 
     public void stop() {
-      if (thread != null && thread.isAlive()) {
-        thread.interrupt();
-      }
+      semaphore.callAcquire();
     }
 
     public void requestStop() {
