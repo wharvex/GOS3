@@ -7,5 +7,7 @@ public interface IOS {
 
   void startup();
 
-  void shutdown();
+  void suspend();
+
+  void resume();
 }

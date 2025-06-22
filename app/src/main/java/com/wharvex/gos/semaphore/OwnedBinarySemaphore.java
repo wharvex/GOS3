@@ -17,8 +17,11 @@ public class OwnedBinarySemaphore extends AbstractSemaphore {
     validatePermits();
     try {
       logger.logCPU(
-          "About to call semaphore acquire from thread: " + threadName);
+          "About to call semaphore acquire on thread " + threadName +
+              " from thread " +
+              Thread.currentThread().getName());
       super.acquire();
+      logger.logCPU(threadName + " continuing.");
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }

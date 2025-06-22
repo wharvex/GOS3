@@ -25,7 +25,12 @@ public class OS implements IOS {
   }
 
   @Override
-  public void shutdown() {
+  public void suspend() {
     kernelProcessWrapper.stop();
+  }
+
+  @Override
+  public void resume() {
+    kernelProcessWrapper.start();
   }
 }

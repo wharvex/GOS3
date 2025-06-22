@@ -37,7 +37,7 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
 
   @Override
   public void stop() {
-    process.stop();
+    process.requestStop();
   }
 
   private static final class GOSProcess implements Runnable {
@@ -71,8 +71,12 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
       semaphore.callRelease();
     }
 
-    public void stop() {
+    private void stop() {
       semaphore.callAcquire();
+    }
+
+    private void resetRequestStop() {
+      stopRequested = false;
     }
 
     public void requestStop() {
@@ -81,13 +85,22 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
 
     public void cooperate() {
       if (stopRequested) {
+        resetRequestStop();
         stop();
       }
     }
 
     @Override
     public void run() {
-      runLogic.get();
+      while (true) {
+        runLogic.get();
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          throw new RuntimeException(e);
+        }
+        cooperate();
+      }
     }
   }
 }
