@@ -24,8 +24,7 @@ public class CPUWindow extends AbstractWindow implements ICPUWindow {
     // Add action listeners to the buttons
     startButton.addActionListener(e -> os.startup());
     stopButton.addActionListener(e -> {
-      writeToConsole("Stop button clicked");
-      // Add logic to stop the CPU
+      writeToWestConsole("Stop button clicked");
     });
     suspendButton.addActionListener(e -> {
       os.suspend();

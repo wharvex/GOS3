@@ -19,6 +19,6 @@ public class TestLogger implements ILogger {
   @Override
   public void logCPU(String message) {
     log(message);
-    cpuWindow.writeToConsole(message);
+    cpuWindow.writeToWestConsole(message);
   }
 }

@@ -5,7 +5,9 @@ import java.awt.*;
 import java.util.List;
 
 public abstract class AbstractWindow extends JFrame implements IWindow {
-  private JTextArea console;
+  private JTextArea westConsole;
+  private JTextArea centerConsole;
+  private JTextArea eastConsole;
   protected List<JButton> buttons;
 
   public AbstractWindow() {
@@ -24,9 +26,9 @@ public abstract class AbstractWindow extends JFrame implements IWindow {
     setLayout(new BorderLayout());
 
     // Create/configure components.
-    console = new JTextArea();
-    console.setEditable(false);
-    JScrollPane scrollPane = new JScrollPane(console);
+    westConsole = new JTextArea();
+    westConsole.setEditable(false);
+    JScrollPane scrollPane = new JScrollPane(westConsole);
     setButtons();
 
     // Create/configure/add control panel; add scroll pane.
@@ -38,11 +40,29 @@ public abstract class AbstractWindow extends JFrame implements IWindow {
     add(scrollPane, BorderLayout.CENTER);
   }
 
-  @Override
-  public void writeToConsole(String message) {
+  private void initializeConsoles() {
+
+  }
+
+  private void writeToConsole(JTextArea console, String message) {
     SwingUtilities.invokeLater(() -> {
       console.append(message + "\n");
       console.setCaretPosition(console.getDocument().getLength());
     });
+  }
+
+  @Override
+  public void writeToWestConsole(String message) {
+    writeToConsole(westConsole, message);
+  }
+
+  @Override
+  public void writeToCenterConsole(String message) {
+    writeToConsole(centerConsole, message);
+  }
+
+  @Override
+  public void writeToEastConsole(String message) {
+    writeToConsole(eastConsole, message);
   }
 }
