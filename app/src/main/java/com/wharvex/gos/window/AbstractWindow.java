@@ -2,12 +2,14 @@ package com.wharvex.gos.window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractWindow extends JFrame implements IWindow {
-  private JTextArea westConsole;
-  private JTextArea centerConsole;
-  private JTextArea eastConsole;
+  private JTextArea westTextArea;
+  private JTextArea centerTextArea;
+  private JTextArea eastTextArea;
+
   protected List<JButton> buttons;
 
   public AbstractWindow() {
@@ -25,23 +27,23 @@ public abstract class AbstractWindow extends JFrame implements IWindow {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLayout(new BorderLayout());
 
-    // Create/configure components.
-    westConsole = new JTextArea();
-    westConsole.setEditable(false);
-    JScrollPane scrollPane = new JScrollPane(westConsole);
-    setButtons();
+    // Create panes.
+    JScrollPane westScrollPane = createScrollPane(getWestTextArea());
+    JScrollPane centerScrollPane = createScrollPane(getCenterTextArea());
+    JScrollPane eastScrollPane = createScrollPane(getEastTextArea());
 
-    // Create/configure/add control panel; add scroll pane.
+    // Create control panel.
     JPanel controlPanel = new JPanel();
-    buttons.forEach(button -> {
+    setButtons();
+    getButtons().forEach(button -> {
       controlPanel.add(button);
     });
+
+    // Add components to frame.
     add(controlPanel, BorderLayout.NORTH);
-    add(scrollPane, BorderLayout.CENTER);
-  }
-
-  private void initializeConsoles() {
-
+    add(westScrollPane, BorderLayout.WEST);
+    add(centerScrollPane, BorderLayout.CENTER);
+    add(eastScrollPane, BorderLayout.EAST);
   }
 
   private void writeToConsole(JTextArea console, String message) {
@@ -53,16 +55,52 @@ public abstract class AbstractWindow extends JFrame implements IWindow {
 
   @Override
   public void writeToWestConsole(String message) {
-    writeToConsole(westConsole, message);
+    writeToConsole(getWestTextArea(), message);
   }
 
   @Override
   public void writeToCenterConsole(String message) {
-    writeToConsole(centerConsole, message);
+    writeToConsole(getCenterTextArea(), message);
   }
 
   @Override
   public void writeToEastConsole(String message) {
-    writeToConsole(eastConsole, message);
+    writeToConsole(getEastTextArea(), message);
   }
+
+  protected List<JButton> getButtons() {
+    if (buttons == null) {
+      buttons = new ArrayList<>();
+    }
+    return buttons;
+  }
+
+  private JScrollPane createScrollPane(JTextArea textArea) {
+    textArea.setEditable(false);
+    JScrollPane scrollPane = new JScrollPane(textArea);
+    scrollPane.setPreferredSize(new Dimension(200, 400));
+    return scrollPane;
+  }
+
+  private JTextArea getWestTextArea() {
+    if (westTextArea == null) {
+      westTextArea = new JTextArea();
+    }
+    return westTextArea;
+  }
+
+  private JTextArea getCenterTextArea() {
+    if (centerTextArea == null) {
+      centerTextArea = new JTextArea();
+    }
+    return centerTextArea;
+  }
+
+  private JTextArea getEastTextArea() {
+    if (eastTextArea == null) {
+      eastTextArea = new JTextArea();
+    }
+    return eastTextArea;
+  }
+
 }

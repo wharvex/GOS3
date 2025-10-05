@@ -6,6 +6,7 @@ import com.wharvex.gos.os.IOS;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class CPUWindow extends AbstractWindow implements ICPUWindow {
@@ -34,7 +35,7 @@ public class CPUWindow extends AbstractWindow implements ICPUWindow {
     });
 
     // Add buttons to the list
-    buttons = new ArrayList<>();
+    List<JButton> buttons = getButtons();
     buttons.add(startButton);
     buttons.add(stopButton);
     buttons.add(suspendButton);
