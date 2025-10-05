@@ -18,6 +18,10 @@ cd GOS3
 .\gradlew run
 ```
 
+### IntelliJ Run Config
+
+![Run Config](https://github.com/wharvex/GOS3/blob/main/gos3_run_debug_config.png "IntelliJ Run Config")
+
 ## Resources
 
 A Guice guideline I want to remember, especially since I will be multi-threading extensively: "Wherever possible, use constructor injection to create immutable objects." ~ [Source](https://github.com/google/guice/wiki/MinimizeMutability)
