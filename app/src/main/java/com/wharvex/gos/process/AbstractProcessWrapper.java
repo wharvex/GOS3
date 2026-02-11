@@ -40,6 +40,11 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
     process.requestStop();
   }
 
+  @Override
+  public void stopPermanently() {
+    process.stopPermanently();
+  }
+
   private static final class GOSProcess implements Runnable {
     private final Supplier<Integer> runLogic;
     private Thread thread;
@@ -101,6 +106,10 @@ public abstract class AbstractProcessWrapper implements IProcessWrapper {
         }
         cooperate();
       }
+    }
+
+    public void stopPermanently() {
+      thread.interrupt();
     }
   }
 }

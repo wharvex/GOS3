@@ -6,4 +6,6 @@ public interface IProcessWrapper {
   void start();
 
   void stop();
+
+  void stopPermanently();
 }

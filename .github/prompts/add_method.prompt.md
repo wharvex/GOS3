@@ -1,0 +1,1 @@
+Add a method to the given class. Use the add_method skill.

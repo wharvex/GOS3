@@ -22,6 +22,7 @@ public class CPUWindow extends AbstractWindow implements ICPUWindow {
     var suspendButton = new JButton("Suspend OS");
     var resumeButton = new JButton("Resume OS");
 
+
     // Add action listeners to the buttons
     startButton.addActionListener(e -> os.startup());
     stopButton.addActionListener(e -> {
